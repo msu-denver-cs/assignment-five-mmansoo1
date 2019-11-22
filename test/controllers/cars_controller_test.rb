@@ -9,7 +9,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:one)
   end
 
-  test 'home' do
+  test 'sign in' do
     sign_in User.create(:email => "#{rand(50000)}@example.com")
     get root_url
     assert_response :success
