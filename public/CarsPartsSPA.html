@@ -1,7 +1,7 @@
 <html lang="EN">
 
 <button onclick="fetch('cars', ['model', 'make_id'])">Cars</button>
-<button onclick="fetch('makes', ['make'])">Makes</button>
+<button onclick="fetch('makes', ['make', 'country'])">Makes</button>
 <button onclick="fetch('parts', ['part'])">Parts</button>
 
 <div id="list">
@@ -15,20 +15,20 @@
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
                 var arrayOfItems = JSON.parse(request.responseText);
-                var output = "";
-                var div = document.getElementById('list');
-                /* for (i in arrayOfItems) {
-                    output += '<a href="' + arrayOfItems[i].url + arrayOfItems[i].id + '">' + arrayOfItems[i].display + '</a><br>';
-                }
-                document.getElementById("list").innerHTML = output; */
-
-                for (var i = 0; i < arrayOfItems.length; i++) {
-                    div.innerHTML = div.innerHTML + "<p class='inner' id="+i+">"+ arrayOfItems[i].url + "</p>" + "<br>";
+                let list = document.getElementById("list");
+                let l = document.createElement("ol");
+                list.appendChild(l);
+                for (i = 0; i < arrayOfItems.length; i++) {
+                    var displayList = document.createElement("li");
+                    for (j = 0; j < id.length; j++) {
+                        displayList.textContent += arrayOfItems[i][id[j]] + ' ';
+                    }
+                    l.appendChild(displayList);
                 }
             }
         };
         request.open("GET", url);
-        request.send();
+        request.send(null);
     };
 </script>
 
