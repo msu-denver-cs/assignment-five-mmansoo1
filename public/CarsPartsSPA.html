@@ -1,34 +1,44 @@
 <html lang="EN">
 
 <button onclick="fetch('cars', ['model', 'make_id'])">Cars</button>
-<button onclick="fetch('makes', ['make'])">Makes</button>
+<button onclick="fetch('makes', ['make', 'country'])">Makes</button>
 <button onclick="fetch('parts', ['part'])">Parts</button>
+<button onclick="post()">Create</button>
 
-<div id="list">
+<div id="display">
 </div>
 
 <script>
-    var fetch = function(json, id) {
+
+    /* This clear function was created by Dr. Beaty in his SPA example.
+     *  Link: https://github.com/drsjb80/SPAs/blob/master/jsspa.html
+    */
+    let d = document.getElementById("display");
+    let clear = function() {
+        while(d.firstChild) {
+            d.removeChild(d.firstChild);
+        }
+    };
+
+    let post = function() {
+    };
+    let fetch = function(json, id) {
 
         let request = new XMLHttpRequest();
         var url = "http://localhost:3000/" + json + ".json";
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
-                var arrayOfItems = JSON.parse(request.responseText);
-                var output = "";
-                var div = document.getElementById('list');
-                /* for (i in arrayOfItems) {
-                    output += '<a href="' + arrayOfItems[i].url + arrayOfItems[i].id + '">' + arrayOfItems[i].display + '</a><br>';
-                }
-                document.getElementById("list").innerHTML = output; */
-
-                for (var i = 0; i < arrayOfItems.length; i++) {
-                    div.innerHTML = div.innerHTML + "<p class='inner' id="+i+">"+ arrayOfItems[i].url + "</p>" + "<br>";
+                clear();
+                let arrayOfItems = JSON.parse(request.responseText);
+                for (i in arrayOfItems) {
+                    for (j in id) {
+                        document.getElementById("display").innerHTML += '<li>' + arrayOfItems[i][id[j]] + ' ' + '</li>';
+                    }
                 }
             }
         };
         request.open("GET", url);
-        request.send();
+        request.send(null);
     };
 </script>
 
